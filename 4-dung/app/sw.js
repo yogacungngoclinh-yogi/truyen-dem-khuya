@@ -1,7 +1,7 @@
 /* Lưu app để mở nhanh; truyện đã xem (ảnh + giọng) nghe lại được khi mất mạng.
    Sửa file → tăng ?v= trong index.html và đổi BAN dưới đây. */
-const BAN = 'truyen-dem-khuya-v3';
-const CORE = ['./', 'index.html', 'style.css?v=3', 'app.js?v=3', 'du-lieu.js?v=3', 'manifest.webmanifest', 'anh/logo.png'];
+const BAN = 'truyen-dem-khuya-v4';
+const CORE = ['./', 'index.html', 'style.css?v=4', 'app.js?v=4', 'du-lieu.js?v=4', 'manifest.webmanifest', 'anh/logo.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(BAN).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== BAN).map(k => caches.delete(k)))).then(() => self.clients.claim()));

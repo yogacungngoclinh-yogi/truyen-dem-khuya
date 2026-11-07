@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div class="sao" aria-hidden="true"></div>
@@ -77,18 +77,29 @@
 
   <div class="doi-truyen">
     <button id="truyenTruoc">‹ Truyện trước</button>
+    <button id="nutHoi" class="nut-hoi">Hỏi &amp; từ mới</button>
     <button id="truyenTiep">Truyện tiếp ›</button>
   </div>
 
-  <!-- màn kết truyện -->
+  <!-- màn hỏi cùng bé / kết truyện -->
   <div class="ket an" id="ket">
-    <div class="ket-hop">
+    <div class="ket-hop" id="ketHop">
       <div class="trang-khuyet" aria-hidden="true"></div>
-      <h2>Chúc bé ngủ ngon</h2>
-      <p class="bai-hoc" id="ketBaiHoc"></p>
+      <h2 id="ketTieuDe">Chúc bé ngủ ngon</h2>
+      <section class="muc">
+        <h3>Cùng nói chuyện nhé <small>Let's talk</small></h3>
+        <p class="goi-y">Ba mẹ đọc câu hỏi, để bé trả lời bằng lời của bé.</p>
+        <ol class="hoi" id="ketHoi"></ol>
+      </section>
+      <section class="muc">
+        <h3>5 từ mới <small>5 new words</small></h3>
+        <p class="goi-y">Chạm vào từ để nghe phát âm.</p>
+        <div class="tu-luoi" id="ketTu"></div>
+      </section>
       <div class="ket-nut">
         <button class="chinh" id="ketTiep">Truyện tiếp ›</button>
         <button id="ketLai">Nghe lại</button>
+        <button id="ketDong">Quay lại truyện</button>
         <button id="ketVe">Về tủ truyện</button>
       </div>
     </div>
@@ -113,7 +124,7 @@
   </div>
 </section>
 
-<script src="du-lieu.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<script src="du-lieu.js?v=4"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>

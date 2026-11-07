@@ -36,28 +36,51 @@
         <div class="chu-the"><div class="so">Truyện ${t.so}</div><div class="ten">${t.tenVn}</div></div>
       </div>`).join('') : '<p class="trong">Chưa có truyện nào. Bấm ♥ trong truyện để lưu truyện bé thích.</p>';
   }
-  let goiY = null;
-  function veToiNay(doi) {
-    const chua = T.filter(t => !daNghe.has(t.so));
-    const nguon = chua.length ? chua : T;
-    if (!goiY || doi || daNghe.has(goiY.so) && chua.length) {
-      let m; do { m = nguon[Math.floor(Math.random() * nguon.length)]; } while (nguon.length > 1 && goiY && m.so === goiY.so);
-      goiY = m;
+  /* ---------- BẬC NGHE + TRUYỆN CỦA TUẦN ---------- */
+  // Nghe lại cùng 1 truyện giúp bé nhớ từ: bậc 1 tiếng Việt → bậc 2 Anh rồi Việt → bậc 3 tiếng Anh
+  const BAC = [['vn', 'Tiếng Việt'], ['en-vn', 'Anh → Việt'], ['en', 'Tiếng Anh']];
+  let bac = luu.doc('bac', {});                    // { so: [true, false, false] }
+  const bacCua = so => bac[so] || [false, false, false];
+  const xongBac = so => bacCua(so).every(Boolean);
+  function ghiBac(so, g) {
+    const i = BAC.findIndex(b => b[0] === g); if (i < 0) return;
+    const a = bacCua(so).slice(); a[i] = true; bac[so] = a; luu.ghi('bac', bac);
+  }
+  function dauTuan() {
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (d.getDay() + 6) % 7);
+    return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  }
+  let tuan = luu.doc('tuan', null);                // { so, tuan }
+  function chonTuan(doi) {
+    const k = dauTuan();
+    if (!doi && tuan && tuan.tuan === k && timSo(tuan.so) >= 0) return tuan;
+    const bd = tuan ? timSo(tuan.so) : -1;
+    let m = null;
+    for (let j = 1; j <= T.length; j++) {
+      const t = T[(bd + j) % T.length];
+      if (!xongBac(t.so)) { m = t; break; }
     }
-    const t = goiY;
+    if (!m) m = T[(bd + 1) % T.length];
+    tuan = { so: m.so, tuan: k }; luu.ghi('tuan', tuan); return tuan;
+  }
+  function veTuan(doi) {
+    const t = T[timSo(chonTuan(doi).so)], b = bacCua(t.so);
+    const tiep = b.findIndex(x => !x);
     $('toiNay').innerHTML = `
       <img src="${t.bia}" alt="">
       <div>
-        <div class="nhan">Truyện tối nay</div>
+        <div class="nhan">Truyện của tuần</div>
         <h2>${t.tenVn}</h2>
         <p class="en-nho">${t.tenEn}</p>
+        <div class="bac">${BAC.map(([g, ten], i) => `<span class="${b[i] ? 'xong' : i === tiep ? 'tiep' : ''}">${b[i] ? '✓' : i + 1} ${ten}</span>`).join('')}</div>
         <div class="hang-nut">
-          <button class="nut-vang" data-mo="${t.so}"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;stroke:none"><path d="M8 5v14l11-7z"/></svg>Nghe truyện</button>
-          <button class="nut-vien" id="doiTruyen">Truyện khác</button>
+          <button class="nut-vang" data-bac="${tiep < 0 ? 0 : tiep}"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;stroke:none"><path d="M8 5v14l11-7z"/></svg>${tiep < 0 ? 'Nghe lại' : 'Nghe bậc ' + (tiep + 1)}</button>
+          <button class="nut-vien" id="doiTruyen">${tiep < 0 ? 'Truyện mới' : 'Đổi truyện'}</button>
         </div>
+        <p class="goi-y">${tiep < 0 ? 'Bé đã nghe đủ 3 bậc. Hỏi bé kể lại truyện nhé!' : 'Nghe lại 3 lần trong tuần để bé nhớ từ tốt hơn.'}</p>
       </div>`;
   }
-  function veTu() { veLoc(); veLuoi(); veToiNay(); }
+  function veTu() { veLoc(); veLuoi(); veTuan(); }
 
   $('loc').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -72,8 +95,9 @@
     if (e.key === 'Enter' && e.target.dataset.so) moTruyen(+e.target.dataset.so);
   });
   $('toiNay').addEventListener('click', e => {
-    if (e.target.closest('#doiTruyen')) { veToiNay(true); return; }
-    const b = e.target.closest('[data-mo]'); if (b) moTruyen(+b.dataset.mo, true);
+    if (e.target.closest('#doiTruyen')) { veTuan(true); return; }
+    const b = e.target.closest('[data-bac]');
+    if (b) { giong = BAC[+b.dataset.bac][0]; luu.ghi('giong', giong); veCaiDat(); moTruyen(chonTuan().so, true); }
   });
   function doiThich(so) {
     thich.has(so) ? thich.delete(so) : thich.add(so);
@@ -225,14 +249,40 @@
     buoc = n; luot = 0; hienBuoc();
     if (dangDoc) hen = setTimeout(docLuot, 500);
   }
+  const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   function ketTruyen() {
     dungDoc();
     daNghe.add(tr.so); luu.ghi('da-nghe', [...daNghe]);
-    const bh = tr.dong[tr.dong.length - 1];
-    $('ketBaiHoc').textContent = bh.vn;
-    $('ketTiep').classList.toggle('an', timSo(tr.so) === T.length - 1);
-    $('ket').classList.remove('an');
+    ghiBac(tr.so, giong);
+    moKet(true);
   }
+  /* màn "Cùng nói chuyện": câu hỏi song ngữ + 5 từ mới. xong = vừa đọc hết truyện */
+  function moKet(xong) {
+    $('ketTieuDe').textContent = xong ? 'Chúc bé ngủ ngon' : 'Hỏi cùng bé';
+    const q = [{ vn: 'Bài học của câu chuyện này là gì?', en: 'What is the lesson of this story?', dapan: true }, ...(tr.hoi || [])];
+    $('ketHoi').innerHTML = q.map(c => `<li>
+      <div class="hoi-vn">${esc(c.vn)}</div><div class="hoi-en">${esc(c.en)}</div>
+      ${c.dapan ? `<button class="xem-dap" data-dap>Xem bài học · Show the lesson</button>
+      <div class="dap-an an"><div>${esc(tr.baiHocVn)}</div><div class="hoi-en">${esc(tr.baiHocEn)}</div></div>` : ''}</li>`).join('');
+    $('ketTu').innerHTML = (tr.tu || []).map((w, i) => `<button class="tu" data-tu="${i}"><span class="tu-en">${esc(w.en)}</span><span class="tu-vn">${esc(w.vn)}</span></button>`).join('');
+    $('ketTiep').classList.toggle('an', timSo(tr.so) === T.length - 1);
+    $('ketDong').classList.toggle('an', xong);
+    $('ket').classList.remove('an'); $('ketHop').scrollTop = 0;
+  }
+  const amTu = new Audio();
+  $('ketHop').addEventListener('click', e => {
+    const d = e.target.closest('[data-dap]');
+    if (d) {
+      const da = d.nextElementSibling; da.classList.toggle('an');
+      d.textContent = da.classList.contains('an') ? 'Xem bài học · Show the lesson' : 'Ẩn bài học · Hide';
+      return;
+    }
+    const w = e.target.closest('[data-tu]');
+    if (w) {
+      amTu.src = tr.tu[+w.dataset.tu].am; amTu.currentTime = 0; amTu.play().catch(() => {});
+      w.classList.add('nghe'); setTimeout(() => w.classList.remove('nghe'), 900);
+    }
+  });
   function doiTruyen(d) {
     const i = timSo(tr.so) + d;
     if (i >= 0 && i < T.length) moTruyen(T[i].so, dangDoc);
@@ -250,6 +300,8 @@
   $('ketTiep').addEventListener('click', () => { const i = timSo(tr.so) + 1; if (i < T.length) moTruyen(T[i].so, true); });
   $('ketLai').addEventListener('click', () => moTruyen(tr.so, true));
   $('ketVe').addEventListener('click', veTuTruyen);
+  $('ketDong').addEventListener('click', () => $('ket').classList.add('an'));
+  $('nutHoi').addEventListener('click', () => { dungDoc(); moKet(false); });
 
   // vuốt trái/phải để sang khung
   let x0 = null;

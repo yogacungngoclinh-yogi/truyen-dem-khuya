@@ -117,6 +117,11 @@ def main():
     tg = json.loads(tg_file.read_text(encoding="utf-8")) if tg_file.exists() else {}
 
     hinh = sorted(glob.glob(str(nguon / "3-tai-san" / "hinh" / "*.jpg")))
+    # câu hỏi + từ vựng viết tay: noi-dung/hoi-tu.json {so: {h: [[vn,en]..], t: [[en,vn]..]}}
+    ht_file = Path(__file__).parent / "noi-dung" / "hoi-tu.json"
+    ht = json.loads(ht_file.read_text(encoding="utf-8")) if ht_file.exists() else {}
+    (APP / "am-thanh" / "tu").mkdir(parents=True, exist_ok=True)
+    tu_thu = {}
     ds, viec, mau = [], [], 0
     for fj in sorted(glob.glob(str(nguon / "2-kich-ban" / "du-lieu" / "*.json"))):
         cd_key = re.sub(r"^phan-\d+-", "", Path(fj).stem)
@@ -139,12 +144,21 @@ def main():
                 for nn in ("vn", "en"):
                     key = f"{so:02d}/{d['id']}-{nn}"
                     viec.append((key, d[nn], nn, APP / "am-thanh" / f"{key}.mp3"))
-            ds.append({"so": so, "chuDe": cd_key, "tenVn": s["ten_vn"], "tenEn": s["ten_en"],
+            h = ht.get(str(so), {})
+            tu = []
+            for en, vn in h.get("t", []):
+                slug = re.sub(r"[^a-z0-9]+", "-", en.lower()).strip("-")
+                tu.append({"en": en, "vn": vn, "am": f"am-thanh/tu/{slug}.mp3"})
+                tu_thu[f"tu/{slug}"] = (f"tu/{slug}", en, "en", APP / "am-thanh" / "tu" / f"{slug}.mp3")
+            ds.append({"so": so, "chuDe": cd_key,
+                       "baiHocVn": s["bai_hoc_vn"], "baiHocEn": s["bai_hoc_en"],
+                       "hoi": [{"vn": a, "en": b} for a, b in h.get("h", [])], "tu": tu, "tenVn": s["ten_vn"], "tenEn": s["ten_en"],
                        "phuDeVn": s["phu_de_vn"], "phuDeEn": s["phu_de_en"],
                        "bia": f"anh/bia/{so:02d}.webp", "trang": trang, "dong": dong})
     print("truyen:", len(ds), "| trang:", sum(len(t["trang"]) for t in ds), "| trang dung khung mau:", mau)
     print("cau can doc:", len(viec))
 
+    viec += list(tu_thu.values())
     if a.nn:
         viec = [v for v in viec if v[2] == a.nn]
     n = asyncio.run(thu_het(viec, tg, a.lai_giong, a.song_song, tg_file, a.so_lan))
