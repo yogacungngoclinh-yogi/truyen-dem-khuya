@@ -35,8 +35,11 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 
 ## Đăng Lên Mạng
 
-Tải cả `4-dung/app/` lên host tĩnh (Netlify, Cloudflare Pages, hoặc thư mục con trên linorayoga.com). Có link rồi thì sửa `og:image` trong `index.html` thành link đầy đủ.
+- Link: https://yogacungngoclinh-yogi.github.io/truyen-dem-khuya/
+- Repo: https://github.com/yogacungngoclinh-yogi/truyen-dem-khuya (công khai, GitHub Pages từ nhánh `main`).
+- Cập nhật: commit + `git push` → khoảng 1 phút sau web có bản mới. Nhớ tăng `?v=` / `BAN` (xem trên).
 
 ## Nhật Ký
 
 - 2026-11-07: dựng bản đầu. 80 truyện / 89 trang. Dò khung tự động 63/89 trang, 26 trang dùng khung mẫu. Thu 516 câu giọng Anh. Giọng Việt HoaiMy bị edge-tts chặn tạm khi thu dồn → thu lại chậm (2 câu cùng lúc).
+- 2026-11-07: đẩy lên GitHub `yogacungngoclinh-yogi/truyen-dem-khuya`, bật GitHub Pages. Giọng Việt lúc đẩy: 442/516 câu, đang thu tiếp.
