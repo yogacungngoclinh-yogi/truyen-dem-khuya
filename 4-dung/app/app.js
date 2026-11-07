@@ -267,11 +267,12 @@
   /* màn "Cùng nói chuyện": câu hỏi song ngữ + 5 từ mới. xong = vừa đọc hết truyện */
   function moKet(xong) {
     $('ketTieuDe').textContent = xong ? 'Chúc bé ngủ ngon' : 'Hỏi cùng bé';
-    const q = [{ vn: 'Bài học của câu chuyện này là gì?', en: 'What is the lesson of this story?', dapan: true }, ...(tr.hoi || [])];
-    $('ketHoi').innerHTML = q.map(c => `<li>
+    const q = [{ vn: 'Bài học của câu chuyện này là gì?', en: 'What is the lesson of this story?', dVn: tr.baiHocVn, dEn: tr.baiHocEn, nut: 'Xem bài học · Show the lesson' },
+      ...(tr.hoi || []).map(c => ({ ...c, nut: 'Xem gợi ý trả lời · Show the answer' }))];
+    $('ketHoi').innerHTML = q.map((c, i) => `<li>
       <div class="hoi-vn">${esc(c.vn)}</div><div class="hoi-en">${esc(c.en)}</div>
-      ${c.dapan ? `<button class="xem-dap" data-dap>Xem bài học · Show the lesson</button>
-      <div class="dap-an an"><div>${esc(tr.baiHocVn)}</div><div class="hoi-en">${esc(tr.baiHocEn)}</div></div>` : ''}</li>`).join('');
+      ${c.dVn ? `<button class="xem-dap" data-dap="${i}" data-nut="${esc(c.nut)}">${esc(c.nut)}</button>
+      <div class="dap-an an"><div>${esc(c.dVn)}</div><div class="hoi-en">${esc(c.dEn)}</div></div>` : ''}</li>`).join('');
     $('ketTu').innerHTML = (tr.tu || []).map((w, i) => `<button class="tu" data-tu="${i}"><span class="tu-en">${esc(w.en)}</span><span class="tu-vn">${esc(w.vn)}</span></button>`).join('');
     $('ketTiep').classList.toggle('an', timSo(tr.so) === T.length - 1);
     $('ketDong').classList.toggle('an', xong);
@@ -282,7 +283,7 @@
     const d = e.target.closest('[data-dap]');
     if (d) {
       const da = d.nextElementSibling; da.classList.toggle('an');
-      d.textContent = da.classList.contains('an') ? 'Xem bài học · Show the lesson' : 'Ẩn bài học · Hide';
+      d.textContent = da.classList.contains('an') ? d.dataset.nut : 'Ẩn đáp án · Hide';
       return;
     }
     const w = e.target.closest('[data-tu]');

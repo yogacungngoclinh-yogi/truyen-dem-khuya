@@ -152,7 +152,7 @@ def main():
                 tu_thu[f"tu/{slug}"] = (f"tu/{slug}", en, "en", APP / "am-thanh" / "tu" / f"{slug}.mp3")
             ds.append({"so": so, "chuDe": cd_key,
                        "baiHocVn": s["bai_hoc_vn"], "baiHocEn": s["bai_hoc_en"],
-                       "hoi": [{"vn": a, "en": b} for a, b in h.get("h", [])], "tu": tu, "tenVn": s["ten_vn"], "tenEn": s["ten_en"],
+                       "hoi": [{"vn": q[0], "en": q[1], "dVn": d[0], "dEn": d[1]} for q, d in zip(h.get("h", []), h.get("d", [["", ""]] * 2))], "tu": tu, "tenVn": s["ten_vn"], "tenEn": s["ten_en"],
                        "phuDeVn": s["phu_de_vn"], "phuDeEn": s["phu_de_en"],
                        "bia": f"anh/bia/{so:02d}.webp", "trang": trang, "dong": dong})
     print("truyen:", len(ds), "| trang:", sum(len(t["trang"]) for t in ds), "| trang dung khung mau:", mau)
