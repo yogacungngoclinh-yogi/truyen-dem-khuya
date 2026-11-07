@@ -148,10 +148,9 @@
     const p = tr.trang[d.trang];
     const img = $('anhTrang');
     if (anhDangHien !== p.anh) { img.src = p.anh; anhDangHien = p.anh; }
-    datCoKhung();
     const el = $('trang');
     if (ngay) { el.style.transition = 'none'; requestAnimationFrame(() => el.style.transition = ''); }
-    el.style.transform = caTrang || d.khung < 0 ? 'none' : phongKhung(p.khung[d.khung], p.chac);
+    datKhung(el, caTrang || d.khung < 0 ? null : p.khung[d.khung], p.chac);
     $('nutCaTrang').textContent = caTrang || d.khung < 0 ? 'Phóng to khung' : 'Xem cả trang';
     $('nutCaTrang').classList.toggle('an', d.khung < 0);
     // lời
@@ -163,23 +162,32 @@
   }
   const boChu = s => s.split(' ').map(w => `<span class="w">${w.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</span>`).join(' ');
 
-  function phongKhung([x, y, w, h], chac) {
-    let s = Math.min(1 / w, 1 / h) * 0.96;
-    s = Math.min(s, chac ? 2.3 : 1.6);
-    const cx = x + w / 2, cy = y + h / 2;
-    const kep = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-    const tx = kep(0.5 - s * cx, 1 - s, 0), ty = kep(0.5 - s * cy, 1 - s, 0);
-    return `translate(${(tx * 100).toFixed(2)}%, ${(ty * 100).toFixed(2)}%) scale(${s.toFixed(3)})`;
-  }
-
-  /* khung ảnh 3:4 vừa với vùng trống */
-  function datCoKhung() {
+  /* Phóng khung: cửa sổ rộng hết màn hình, cao vừa đúng 1 khung, khung lấp đầy chiều ngang.
+     Trang gốc 896×1200 (tỉ lệ 3:4). box = [x, y, w, h] theo tỉ lệ trang; null = xem cả trang. */
+  const ASP = 1200 / 896;
+  function datKhung(el, box, chac) {
     const san = $('san'), k = $('khungTrang');
-    const W = san.clientWidth, H = san.clientHeight;
-    let w = Math.min(W, H * 0.75), h = w / 0.75;
-    k.style.width = Math.floor(w) + 'px'; k.style.height = Math.floor(h) + 'px';
+    const Ww = san.clientWidth, Hmax = san.clientHeight;
+    const Pw = Ww, Ph = Ww * ASP;                       // trang ở độ phóng 1
+    let s, Hk, tx, ty;
+    if (!box) {                                          // cả trang, vừa khít chiều cao
+      Hk = Math.min(Hmax, Ph); s = Hk / Ph;
+      tx = (Ww - s * Pw) / 2; ty = 0;
+    } else {
+      const [x, y, w, h] = box;
+      const le = chac ? 0.975 : 0.93;                    // chừa lề nhỏ quanh khung (khung dò chưa chắc → chừa rộng hơn)
+      s = Math.min(le / w, 3.6);
+      Hk = Math.min(Hmax, s * h * Ph / le);
+      s = Math.min(s, le * Hk / (h * Ph));               // màn thấp quá thì vừa chiều cao
+      const kep = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+      tx = kep(Ww / 2 - s * (x + w / 2) * Pw, Ww - s * Pw, 0);
+      ty = kep(Hk / 2 - s * (y + h / 2) * Ph, Hk - s * Ph, 0);
+    }
+    k.style.width = Ww + 'px'; k.style.height = Math.round(Hk) + 'px';
+    el.style.width = Pw + 'px'; el.style.height = Ph + 'px';
+    el.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${s.toFixed(4)})`;
   }
-  addEventListener('resize', () => { if (tr && !$('doc').classList.contains('an')) datCoKhung(); });
+  addEventListener('resize', () => { if (tr && !$('doc').classList.contains('an')) hienBuoc(true); });
 
   /* phát giọng */
   function phat() {

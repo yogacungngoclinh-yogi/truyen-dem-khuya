@@ -23,7 +23,7 @@ App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đ�
   - `du-lieu.js` — tự sinh, không sửa tay.
   - `anh/trang/` trang truyện WebP · `anh/bia/` ảnh bìa nhỏ · `am-thanh/NN/` giọng đọc (`ten`, `k1..k8`, `bh` × `vn`/`en`).
 - `4-dung/cong-cu/xay-app.py` — dựng ảnh, khung, giọng, `du-lieu.js` từ dự án truyện tranh.
-- `4-dung/cong-cu/do-khung.py` — dò 4 khung trên mỗi trang để phóng to. Trang không dò được dùng khung mẫu, phóng nhẹ hơn.
+- `4-dung/cong-cu/do-khung.py` — dò 4 khung (ảnh + chữ EN/VN) trên mỗi trang để phóng to: tìm huy hiệu EN xanh + vòng số cam; 9 trang bố cục lạ ghi tay trong `GHI_DE`. Xem kết quả: `python do-khung.py <thư mục ảnh> <thư mục ra>` (vẽ khung đỏ).
 - Nguồn truyện + ảnh: `1-dau-vao/nguon.md`.
 
 ## Thêm / Sửa Truyện
@@ -51,3 +51,4 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 - 2026-11-07: đưa nút chọn giọng + bật/tắt nhạc ra ngay màn đọc (trước chỉ nằm trong ⚙, anh không thấy). Bản v3.
 - 2026-11-07: thu đủ 516/516 câu giọng Việt (có giới hạn 60 giây mỗi câu để không treo). Đã đẩy lên web.
 - 2026-11-07: thêm Hỏi cùng bé (3 câu song ngữ/truyện), Truyện của tuần 3 bậc, 5 từ mới + phát âm (328 từ). Dựa trên nghiên cứu ở `1-dau-vao/nghien-cuu-phat-trien-app.md`. Bản v4.
+- 2026-11-07: phóng khung lớn nhất: cửa sổ rộng hết màn hình, cao vừa 1 khung, khung lấp đầy chiều ngang (trước: cửa sổ 3:4 nhỏ hơn màn hình, còn thấy khung bên cạnh). Dò lại toàn bộ 89 trang: 89/89 có khung chính xác (trước 63/89, nhiều trang cắt mất chữ dưới khung). Bản v6.
