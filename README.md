@@ -45,3 +45,4 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 - 2026-11-07: dựng bản đầu. 80 truyện / 89 trang. Dò khung tự động 63/89 trang, 26 trang dùng khung mẫu. Thu 516 câu giọng Anh. Giọng Việt HoaiMy bị edge-tts chặn tạm khi thu dồn → thu lại chậm (2 câu cùng lúc).
 - 2026-11-07: đẩy lên GitHub `yogacungngoclinh-yogi/truyen-dem-khuya`, bật GitHub Pages. Giọng Việt lúc đẩy: 442/516 câu, đang thu tiếp.
 - 2026-11-07: đưa nút chọn giọng + bật/tắt nhạc ra ngay màn đọc (trước chỉ nằm trong ⚙, anh không thấy). Bản v3.
+- 2026-11-07: thu đủ 516/516 câu giọng Việt (có giới hạn 60 giây mỗi câu để không treo). Đã đẩy lên web.

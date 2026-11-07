@@ -87,14 +87,14 @@ async def thu_het(viec, cu, lai, song_song, tg_file, so_lan=4):
         async with sem:
             for lan in range(so_lan):
                 try:
-                    cu[key] = khop(chu, await thu(chu, nn, duong))
+                    cu[key] = khop(chu, await asyncio.wait_for(thu(chu, nn, duong), 60))  # 60s: tránh treo khi máy chủ im
                     xong[0] += 1
                     if xong[0] % 25 == 0:
                         print("  da thu", xong[0], flush=True)
                         tg_file.write_text(json.dumps(cu), encoding="utf-8")
                     return
                 except Exception as e:
-                    print("  loi", key, e, flush=True)
+                    print("  loi", key, repr(e)[:120], flush=True)
                     await asyncio.sleep(2 + lan * 3)
 
     await asyncio.gather(*(mot(*v) for v in viec))
