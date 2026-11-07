@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Truyện Đêm Khuya</title>
+<meta name="description" content="80 truyện tranh đạo đức song ngữ Anh – Việt, có giọng đọc, cho bé nghe trước giờ ngủ. Linora Yoga.">
+<meta name="theme-color" content="#141a2e">
+<meta property="og:title" content="Truyện Đêm Khuya – Linora Yoga">
+<meta property="og:description" content="80 truyện tranh đạo đức song ngữ, có giọng đọc cho bé trước giờ ngủ.">
+<meta property="og:image" content="anh/icon/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="anh/icon/icon-192.png">
+<link rel="apple-touch-icon" href="anh/icon/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<div class="sao" aria-hidden="true"></div>
+
+<!-- TỦ TRUYỆN -->
+<main id="tu" class="man">
+  <header class="dau">
+    <div class="thuong-hieu"><img src="anh/logo.png" alt="" width="28" height="28"><span>Linora Yoga</span></div>
+    <h1>Truyện Đêm Khuya</h1>
+    <p class="phu">80 truyện song ngữ Anh – Việt cho bé trước giờ ngủ</p>
+  </header>
+
+  <section class="toi-nay" id="toiNay"></section>
+
+  <nav class="loc" id="loc" aria-label="Lọc truyện"></nav>
+  <section class="luoi" id="luoi"></section>
+  <p class="cuoi-trang">Linora Yoga · Chúc bé ngủ ngon</p>
+</main>
+
+<!-- ĐỌC TRUYỆN -->
+<section id="doc" class="man an" aria-label="Đọc truyện">
+  <div class="thanh-tren">
+    <button class="nut-tron" id="veTu" aria-label="Về tủ truyện"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="ten-doc" id="tenDoc"></div>
+    <button class="nut-tron" id="nutThich" aria-label="Thích truyện này"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+    <button class="nut-tron" id="nutCaiDat" aria-label="Cài đặt"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button>
+  </div>
+
+  <div class="san" id="san">
+    <div class="khung-trang" id="khungTrang">
+      <div class="trang" id="trang"><img id="anhTrang" alt=""></div>
+    </div>
+    <button class="nut-ca-trang" id="nutCaTrang">Xem cả trang</button>
+  </div>
+
+  <div class="loi-doc" id="loiDoc">
+    <div class="so-khung" id="soKhung"></div>
+    <p class="vn" id="loiVn"></p>
+    <p class="en" id="loiEn"></p>
+  </div>
+
+  <div class="dieu-khien">
+    <button class="nut-tron to" id="nutLui" aria-label="Khung trước"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="nut-phat" id="nutPhat" aria-label="Đọc"><svg class="i-phat" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="i-dung" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <button class="nut-tron to" id="nutToi" aria-label="Khung sau"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <div class="cham" id="cham"></div>
+
+  <div class="doi-truyen">
+    <button id="truyenTruoc">‹ Truyện trước</button>
+    <button id="truyenTiep">Truyện tiếp ›</button>
+  </div>
+
+  <!-- màn kết truyện -->
+  <div class="ket an" id="ket">
+    <div class="ket-hop">
+      <div class="trang-khuyet" aria-hidden="true"></div>
+      <h2>Chúc bé ngủ ngon</h2>
+      <p class="bai-hoc" id="ketBaiHoc"></p>
+      <div class="ket-nut">
+        <button class="chinh" id="ketTiep">Truyện tiếp ›</button>
+        <button id="ketLai">Nghe lại</button>
+        <button id="ketVe">Về tủ truyện</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- cài đặt -->
+  <div class="cai-dat an" id="caiDat">
+    <div class="cai-hop">
+      <h3>Giọng đọc</h3>
+      <div class="chon" id="chonGiong">
+        <button data-g="vn">Tiếng Việt</button>
+        <button data-g="en">Tiếng Anh</button>
+        <button data-g="en-vn">Anh rồi Việt</button>
+      </div>
+      <h3>Nhạc ru nhẹ</h3>
+      <div class="chon" id="chonNhac">
+        <button data-n="1">Bật</button>
+        <button data-n="0">Tắt</button>
+      </div>
+      <button class="dong" id="dongCaiDat">Xong</button>
+    </div>
+  </div>
+</section>
+
+<script src="du-lieu.js?v=2"></script>
+<script src="app.js?v=2"></script>
+</body>
+</html>
