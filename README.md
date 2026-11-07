@@ -9,7 +9,8 @@ App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đ�
 - Tủ truyện: 4 chủ đề (Trung thực · Khiêm tốn & Nỗ lực · Lòng tốt · Biết ơn) + lọc ♥ Bé thích. "Truyện tối nay" gợi ý ngẫu nhiên 1 truyện chưa nghe.
 - Đọc: bấm ▶ → app phóng to từng khung, đọc lời, tô sáng từng chữ, tự sang khung kế. Hết truyện → màn "Chúc bé ngủ ngon", **không tự chuyển truyện**; bấm "Truyện tiếp ›" để nghe truyện khác.
 - ‹ › hoặc vuốt ảnh: sang khung. Chạm ảnh / "Xem cả trang": xem cả trang.
-- ⚙ Cài đặt: giọng Tiếng Việt / Tiếng Anh / Anh rồi Việt · Nhạc ru nhẹ bật/tắt (nhạc tạo bằng code, không có file nhạc).
+- Dưới lời đọc có sẵn nút giọng **Tiếng Việt / Tiếng Anh / Anh → Việt** và nút **Nhạc: bật/tắt** (đổi giọng lúc đang đọc → đọc lại câu đó bằng giọng mới).
+- ⚙ Cài đặt (cùng chức năng): giọng Tiếng Việt / Tiếng Anh / Anh rồi Việt · Nhạc ru nhẹ bật/tắt (nhạc tạo bằng code, không có file nhạc).
 - Đã nghe ✓, ♥, giọng chọn → lưu trên máy người dùng, không cần tài khoản.
 - Màn hình được giữ sáng khi đang đọc. Thêm vào màn hình điện thoại như app.
 
@@ -43,3 +44,4 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 
 - 2026-11-07: dựng bản đầu. 80 truyện / 89 trang. Dò khung tự động 63/89 trang, 26 trang dùng khung mẫu. Thu 516 câu giọng Anh. Giọng Việt HoaiMy bị edge-tts chặn tạm khi thu dồn → thu lại chậm (2 câu cùng lúc).
 - 2026-11-07: đẩy lên GitHub `yogacungngoclinh-yogi/truyen-dem-khuya`, bật GitHub Pages. Giọng Việt lúc đẩy: 442/516 câu, đang thu tiếp.
+- 2026-11-07: đưa nút chọn giọng + bật/tắt nhạc ra ngay màn đọc (trước chỉ nằm trong ⚙, anh không thấy). Bản v3.

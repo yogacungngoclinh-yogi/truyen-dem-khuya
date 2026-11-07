@@ -135,6 +135,13 @@ svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width:
 .loi-doc .dang-doc .w.nay { opacity: 1; color: var(--vang); }
 .loi-doc .tat { display: none; }
 
+.che-do { flex: none; display: flex; gap: 8px; margin-top: 10px; align-items: stretch; }
+.chon-nhanh { flex: 1; display: flex; background: var(--nen-2); border: 1px solid var(--vien); border-radius: 999px; padding: 3px; min-width: 0; }
+.chon-nhanh button { flex: 1; padding: 8px 4px; border-radius: 999px; font-size: 13.5px; color: var(--chu-mo); white-space: nowrap; transition: background .15s, color .15s; }
+.chon-nhanh button[aria-pressed="true"] { background: var(--chu); color: var(--nen); font-weight: 600; }
+.nut-nhac { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 0 13px; border-radius: 999px; border: 1px solid var(--vien); font-size: 13.5px; color: var(--chu-mo); white-space: nowrap; }
+.nut-nhac svg { width: 17px; height: 17px; }
+.nut-nhac[aria-pressed="true"] { color: var(--vang); border-color: rgba(242,181,107,.45); }
 .dieu-khien { flex: none; display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 10px; }
 .nut-phat {
   width: 66px; height: 66px; border-radius: 50%; background: var(--vang); color: #2a1c08;

@@ -267,23 +267,31 @@
     else if (e.key === 'Escape') veTuTruyen();
   });
 
-  /* cài đặt */
+  /* cài đặt: giọng + nhạc (hàng nút nhanh dưới lời đọc và bảng ⚙ dùng chung) */
   function veCaiDat() {
-    [...$('chonGiong').children].forEach(b => b.setAttribute('aria-pressed', b.dataset.g === giong));
+    [...$('chonGiong').children, ...$('giongNhanh').children].forEach(b => b.setAttribute('aria-pressed', b.dataset.g === giong));
     [...$('chonNhac').children].forEach(b => b.setAttribute('aria-pressed', (b.dataset.n === '1') === nhacBat));
+    $('nutNhac').setAttribute('aria-pressed', nhacBat);
+    $('chuNhac').textContent = nhacBat ? 'Nhạc: bật' : 'Nhạc: tắt';
+  }
+  function doiGiong(g) {
+    if (g === giong) return;
+    giong = g; luu.ghi('giong', giong); luot = 0; veCaiDat();
+    if (dangDoc) { clearTimeout(hen); am.pause(); dungChu(); docLuot(); }   // đọc lại câu này bằng giọng mới
+  }
+  function doiNhac(bat) {
+    nhacBat = bat; luu.ghi('nhac', nhacBat); veCaiDat();
+    nhacBat && dangDoc ? batNhac() : tatNhac();
   }
   $('nutCaiDat').addEventListener('click', () => { veCaiDat(); $('caiDat').classList.remove('an'); });
   $('dongCaiDat').addEventListener('click', () => $('caiDat').classList.add('an'));
   $('caiDat').addEventListener('click', e => { if (e.target.id === 'caiDat') $('caiDat').classList.add('an'); });
-  $('chonGiong').addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    giong = b.dataset.g; luu.ghi('giong', giong); luot = 0; veCaiDat();
-  });
-  $('chonNhac').addEventListener('click', e => {
-    const b = e.target.closest('button'); if (!b) return;
-    nhacBat = b.dataset.n === '1'; luu.ghi('nhac', nhacBat); veCaiDat();
-    nhacBat && dangDoc ? batNhac() : tatNhac();
-  });
+  const chonG = e => { const b = e.target.closest('button'); if (b) doiGiong(b.dataset.g); };
+  $('chonGiong').addEventListener('click', chonG);
+  $('giongNhanh').addEventListener('click', chonG);
+  $('chonNhac').addEventListener('click', e => { const b = e.target.closest('button'); if (b) doiNhac(b.dataset.n === '1'); });
+  $('nutNhac').addEventListener('click', () => doiNhac(!nhacBat));
+  veCaiDat();
 
   /* giữ màn hình sáng khi đang đọc */
   async function giuMan(bat) {
