@@ -80,7 +80,7 @@
         <p class="goi-y">${tiep < 0 ? 'Bé đã nghe đủ 3 bậc. Hỏi bé kể lại truyện nhé!' : 'Nghe lại 3 lần trong tuần để bé nhớ từ tốt hơn.'}</p>
       </div>`;
   }
-  function veTu() { veLoc(); veLuoi(); veTuan(); }
+  function veTu() { $('phuDau').textContent = `${T.length} truyện song ngữ Anh – Việt cho bé trước giờ ngủ`; veLoc(); veLuoi(); veTuan(); }
 
   $('loc').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -274,6 +274,7 @@
       ${c.dVn ? `<button class="xem-dap" data-dap="${i}" data-nut="${esc(c.nut)}">${esc(c.nut)}</button>
       <div class="dap-an an"><div>${esc(c.dVn)}</div><div class="hoi-en">${esc(c.dEn)}</div></div>` : ''}</li>`).join('');
     $('ketTu').innerHTML = (tr.tu || []).map((w, i) => `<button class="tu" data-tu="${i}"><span class="tu-en">${esc(w.en)}</span><span class="tu-vn">${esc(w.vn)}</span></button>`).join('');
+    $('mucTu').classList.toggle('an', !(tr.tu && tr.tu.length));
     $('ketTiep').classList.toggle('an', timSo(tr.so) === T.length - 1);
     $('ketDong').classList.toggle('an', xong);
     $('ket').classList.remove('an'); $('ketHop').scrollTop = 0;

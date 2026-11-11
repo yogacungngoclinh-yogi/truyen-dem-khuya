@@ -27,6 +27,11 @@ CHU_DE = {
     "khiem-ton-no-luc": "Khiêm tốn & Nỗ lực",
     "long-tot": "Lòng tốt",
     "biet-on": "Biết ơn",
+    "cam-xuc-tu-chu": "Cảm xúc & Tự chủ",
+    "tu-tin-phat-trien": "Tự tin & Phát triển",
+    "ban-be-hop-tac": "Bạn bè & Hợp tác",
+    "trach-nhiem-thoi-quen": "Trách nhiệm & Thói quen",
+    "dung-cam-ton-trong-an-toan": "Dũng cảm & An toàn",
 }
 
 
@@ -103,27 +108,27 @@ async def thu_het(viec, cu, lai, song_song, tg_file, so_lan=4):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--nguon", required=True)
+    ap.add_argument("--nguon", required=True, nargs="+", help="1 hay nhiều folder dự án truyện tranh")
     ap.add_argument("--lai-giong", action="store_true")
     ap.add_argument("--nn", choices=["vn", "en"], help="chỉ thu 1 ngôn ngữ")
     ap.add_argument("--song-song", type=int, default=4)
     ap.add_argument("--so-lan", type=int, default=4, help="số lần thử mỗi câu")
     a = ap.parse_args()
-    nguon = Path(a.nguon)
+    nguons = [Path(x) for x in a.nguon]
     for d in ("anh/trang", "anh/bia", "am-thanh"):
         (APP / d).mkdir(parents=True, exist_ok=True)
 
     tg_file = Path(__file__).parent / "thoi-gian.json"
     tg = json.loads(tg_file.read_text(encoding="utf-8")) if tg_file.exists() else {}
 
-    hinh = sorted(glob.glob(str(nguon / "3-tai-san" / "hinh" / "*.jpg")))
+    hinh = sorted(f for n in nguons for e in ("jpg", "png", "jpeg", "webp") for f in glob.glob(str(n / "3-tai-san" / "hinh" / f"*.{e}")))
     # câu hỏi + từ vựng viết tay: noi-dung/hoi-tu.json {so: {h: [[vn,en]..], t: [[en,vn]..]}}
     ht_file = Path(__file__).parent / "noi-dung" / "hoi-tu.json"
     ht = json.loads(ht_file.read_text(encoding="utf-8")) if ht_file.exists() else {}
     (APP / "am-thanh" / "tu").mkdir(parents=True, exist_ok=True)
     tu_thu = {}
     ds, viec, mau = [], [], 0
-    for fj in sorted(glob.glob(str(nguon / "2-kich-ban" / "du-lieu" / "*.json"))):
+    for fj in sorted(f for n in nguons for f in glob.glob(str(n / "2-kich-ban" / "du-lieu" / "*.json"))):
         cd_key = re.sub(r"^phan-\d+-", "", Path(fj).stem)
         for s in json.load(open(fj, encoding="utf-8")):
             so = s["so"]
