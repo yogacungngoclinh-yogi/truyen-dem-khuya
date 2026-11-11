@@ -6,7 +6,7 @@ App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đ�
 
 - Mở qua web (http/https). Mở thẳng file `index.html` thì không có tiếng và không chạy khi mất mạng.
 - Chạy thử trên máy: `python -m http.server 8771 --directory 4-dung/app` → mở http://localhost:8771
-- Tủ truyện: 9 chủ đề (Trung thực · Khiêm tốn & Nỗ lực · Lòng tốt · Biết ơn · Cảm xúc & Tự chủ · Tự tin & Phát triển · Bạn bè & Hợp tác · Trách nhiệm & Thói quen · Dũng cảm & An toàn; 5 nhóm sau hiện khi có ảnh) + lọc ♥ Bé thích. "Truyện tối nay" gợi ý ngẫu nhiên 1 truyện chưa nghe.
+- Tủ truyện: 14 chủ đề (Trung thực · Khiêm tốn & Nỗ lực · Lòng tốt · Biết ơn · Cảm xúc & Tự chủ · Tự tin & Phát triển · Bạn bè & Hợp tác · Trách nhiệm & Thói quen · Dũng cảm & An toàn · Tư duy tích cực · Tư duy sáng tạo · Nhân cách & Đạo đức · Kỹ năng sống · Gia đình & Cộng đồng; 10 nhóm sau hiện khi có ảnh) + lọc ♥ Bé thích. "Truyện tối nay" gợi ý ngẫu nhiên 1 truyện chưa nghe.
 - Đọc: bấm ▶ → app phóng to từng khung, đọc lời, tô sáng từng chữ, tự sang khung kế. Hết truyện → màn "Chúc bé ngủ ngon", **không tự chuyển truyện**; bấm "Truyện tiếp ›" để nghe truyện khác.
 - ‹ › hoặc vuốt ảnh: sang khung. Chạm ảnh / "Xem cả trang": xem cả trang.
 - Dưới lời đọc có sẵn nút giọng **Tiếng Việt / Tiếng Anh / Anh → Việt** và nút **Nhạc: bật/tắt** (đổi giọng lúc đang đọc → đọc lại câu đó bằng giọng mới).
@@ -31,7 +31,7 @@ App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đ�
 1. Sửa lời trong dự án truyện tranh (`2-kich-ban/du-lieu/*.json`) hoặc thêm ảnh mới vào `3-tai-san/hinh/`.
 - Câu hỏi + đáp án + từ vựng viết tay trong `4-dung/cong-cu/noi-dung/hoi-tu.json` (80 truyện × 2 câu hỏi kèm đáp án + 5 từ; đáp án ở khoá `d`). Sửa ở đó rồi chạy lại script.
 2. Chạy (chỉ làm phần còn thiếu):
-   `python 4-dung/cong-cu/xay-app.py --nguon "J:/_Apps/ai-video-producer/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80" "J:/_Apps/ai-video-producer/du-an/2026-11-11-khac-truyen-tranh-ban-than-50"` (`--nguon` nhận nhiều dự án; truyện chưa có ảnh được bỏ qua, có ảnh là tự vào app)
+   `python 4-dung/cong-cu/xay-app.py --nguon "J:/_Apps/ai-video-producer/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80" "J:/_Apps/ai-video-producer/du-an/2026-11-11-khac-truyen-tranh-ban-than-50" "J:/_Apps/ai-video-producer/du-an/2026-11-12-khac-truyen-tranh-nhan-cach-50"` (`--nguon` nhận nhiều dự án; truyện chưa có ảnh được bỏ qua, có ảnh là tự vào app)
    - Sửa lời 1 câu → xoá file mp3 của câu đó rồi chạy lại. `--lai-giong` thu lại hết.
    - Edge-tts hay chặn giọng HoaiMy khi gọi dồn → `--nn vn --song-song 2`.
 3. Tăng `?v=` trong `index.html` và đổi `BAN` trong `sw.js` để máy người dùng lấy bản mới.
@@ -54,3 +54,4 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 - 2026-11-07: phóng khung lớn nhất: cửa sổ rộng hết màn hình, cao vừa 1 khung, khung lấp đầy chiều ngang (trước: cửa sổ 3:4 nhỏ hơn màn hình, còn thấy khung bên cạnh). Dò lại toàn bộ 89 trang: 89/89 có khung chính xác (trước 63/89, nhiều trang cắt mất chữ dưới khung). Bản v6.
 - 2026-11-07: thêm đáp án song ngữ ẩn cho cả 3 câu hỏi mỗi truyện (bấm hiện). Bản v7.
 - 2026-11-11: chuẩn bị bổ sung 50 truyện (số 81–130, 5 nhóm mới): `--nguon` nhận nhiều dự án, thêm 5 nhóm, soạn sẵn câu hỏi + đáp án + 5 từ cho 50 truyện (`noi-dung/hoi-tu.json`). Chờ ảnh ChatGPT từ dự án `2026-11-11-khac-truyen-tranh-ban-than-50`. Bản v8.
+- 2026-11-12: chuẩn bị đợt 3: 50 truyện số 131–180 (5 nhóm tư duy/nhân cách/kỹ năng sống/gia đình), câu hỏi + đáp án + từ vựng soạn sẵn; chờ ảnh ChatGPT từ dự án `2026-11-12-khac-truyen-tranh-nhan-cach-50`.

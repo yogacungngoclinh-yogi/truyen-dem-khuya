@@ -32,6 +32,11 @@ CHU_DE = {
     "ban-be-hop-tac": "Bạn bè & Hợp tác",
     "trach-nhiem-thoi-quen": "Trách nhiệm & Thói quen",
     "dung-cam-ton-trong-an-toan": "Dũng cảm & An toàn",
+    "tu-duy-tich-cuc": "Tư duy tích cực",
+    "tu-duy-sang-tao-phan-bien": "Tư duy sáng tạo",
+    "nhan-cach-dao-duc": "Nhân cách & Đạo đức",
+    "ky-nang-song": "Kỹ năng sống",
+    "gia-dinh-cong-dong": "Gia đình & Cộng đồng",
 }
 
 
