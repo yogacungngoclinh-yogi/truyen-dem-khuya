@@ -1,6 +1,6 @@
-# Truyện Đêm Khuya
+﻿# Truyện Đêm Khuya
 
-App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đức song ngữ Anh – Việt (89 trang), có giọng đọc, chữ sáng dần theo lời đọc. Thương hiệu Linora Yoga. Làm ngày 2026-11-07.
+App web cho bé nghe truyện trước giờ ngủ: 280 truyện tranh đạo đức song ngữ Anh – Việt, có giọng đọc, chữ sáng dần theo lời đọc. Thương hiệu Linora Yoga. Làm ngày 2026-11-07.
 
 ## Dùng
 
@@ -31,7 +31,7 @@ App web cho bé nghe truyện trước giờ ngủ: 80 truyện tranh đạo đ�
 1. Sửa lời trong dự án truyện tranh (`2-kich-ban/du-lieu/*.json`) hoặc thêm ảnh mới vào `3-tai-san/hinh/`.
 - Câu hỏi + đáp án + từ vựng viết tay trong `4-dung/cong-cu/noi-dung/hoi-tu.json` (80 truyện × 2 câu hỏi kèm đáp án + 5 từ; đáp án ở khoá `d`). Sửa ở đó rồi chạy lại script.
 2. Chạy (chỉ làm phần còn thiếu):
-   `python 4-dung/cong-cu/xay-app.py --nguon "J:/_Apps/ai-video-producer/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80" "J:/_Apps/ai-video-producer/du-an/2026-11-11-khac-truyen-tranh-ban-than-50" "J:/_Apps/ai-video-producer/du-an/2026-11-12-khac-truyen-tranh-nhan-cach-50"` (`--nguon` nhận nhiều dự án; truyện chưa có ảnh được bỏ qua, có ảnh là tự vào app)
+   `python 4-dung/cong-cu/xay-app.py --nguon "J:/_Apps/truyen-dem-khuya/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80" "J:/_Apps/truyen-dem-khuya/du-an/2026-11-11-khac-truyen-tranh-ban-than-50" "J:/_Apps/truyen-dem-khuya/du-an/2026-11-12-khac-truyen-tranh-nhan-cach-50" "J:/_Apps/truyen-dem-khuya/du-an/2026-11-12-khac-truyen-tranh-cloud-100"` (`--nguon` nhận nhiều dự án; truyện chưa có ảnh được bỏ qua, có ảnh là tự vào app)
    - Sửa lời 1 câu → xoá file mp3 của câu đó rồi chạy lại. `--lai-giong` thu lại hết.
    - Edge-tts hay chặn giọng HoaiMy khi gọi dồn → `--nn vn --song-song 2`.
 3. Tăng `?v=` trong `index.html` và đổi `BAN` trong `sw.js` để máy người dùng lấy bản mới.
@@ -55,3 +55,4 @@ Giọng: Việt `vi-VN-HoaiMyNeural` (-12%), Anh `en-US-JennyNeural` (-15%, cùn
 - 2026-11-07: thêm đáp án song ngữ ẩn cho cả 3 câu hỏi mỗi truyện (bấm hiện). Bản v7.
 - 2026-11-11: chuẩn bị bổ sung 50 truyện (số 81–130, 5 nhóm mới): `--nguon` nhận nhiều dự án, thêm 5 nhóm, soạn sẵn câu hỏi + đáp án + 5 từ cho 50 truyện (`noi-dung/hoi-tu.json`). Chờ ảnh ChatGPT từ dự án `2026-11-11-khac-truyen-tranh-ban-than-50`. Bản v8.
 - 2026-11-12: chuẩn bị đợt 3: 50 truyện số 131–180 (5 nhóm tư duy/nhân cách/kỹ năng sống/gia đình), câu hỏi + đáp án + từ vựng soạn sẵn; chờ ảnh ChatGPT từ dự án `2026-11-12-khac-truyen-tranh-nhan-cach-50`.
+- 2026-11-13: thêm 200 truyện: 81–130 (ban-than-50), 131–180 (nhan-cach-50), 181–280 (cloud-100: 100 truyện anh tạo sẵn, chép lời từ ảnh, số gốc 131–230 đổi +50). Ảnh mới tỉ lệ 2:3 (app đọc `tl` từng trang). Đủ giọng Anh + Việt (3560 câu). Bản v10. Edge-tts chặn giọng Việt → thu cách nhau 3 giây/câu, chạy lặp tới khi hết thiếu.

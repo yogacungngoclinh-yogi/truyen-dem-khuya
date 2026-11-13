@@ -150,7 +150,7 @@
     if (anhDangHien !== p.anh) { img.src = p.anh; anhDangHien = p.anh; }
     const el = $('trang');
     if (ngay) { el.style.transition = 'none'; requestAnimationFrame(() => el.style.transition = ''); }
-    datKhung(el, caTrang || d.khung < 0 ? null : p.khung[d.khung], p.chac);
+    datKhung(el, caTrang || d.khung < 0 ? null : p.khung[d.khung], p.chac, p.tl);
     $('nutCaTrang').textContent = caTrang || d.khung < 0 ? 'Phóng to khung' : 'Xem cả trang';
     $('nutCaTrang').classList.toggle('an', d.khung < 0);
     // lời
@@ -164,8 +164,9 @@
 
   /* Phóng khung: cửa sổ rộng hết màn hình, cao vừa đúng 1 khung, khung lấp đầy chiều ngang.
      Trang gốc 896×1200 (tỉ lệ 3:4). box = [x, y, w, h] theo tỉ lệ trang; null = xem cả trang. */
-  const ASP = 1200 / 896;
-  function datKhung(el, box, chac) {
+  const ASP0 = 1200 / 896;
+  function datKhung(el, box, chac, tl) {
+    const ASP = tl || ASP0;                               // tỉ lệ cao/rộng của ảnh trang (80 truyện đầu 3:4, đợt sau 2:3)
     const san = $('san'), k = $('khungTrang');
     const Ww = san.clientWidth, Hmax = san.clientHeight;
     const Pw = Ww, Ph = Ww * ASP;                       // trang ở độ phóng 1

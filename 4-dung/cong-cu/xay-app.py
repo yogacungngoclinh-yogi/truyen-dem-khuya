@@ -1,4 +1,4 @@
-"""Dựng dữ liệu cho app Truyện Đêm Khuya từ dự án truyện tranh.
+﻿"""Dựng dữ liệu cho app Truyện Đêm Khuya từ dự án truyện tranh.
 
 Đọc: <nguon>/2-kich-ban/du-lieu/*.json + <nguon>/3-tai-san/hinh/*.jpg
 Ra (trong 4-dung/app/):
@@ -8,7 +8,7 @@ Ra (trong 4-dung/app/):
   du-lieu.js             window.TRUYEN = [...] (lời, khung, thời gian từng chữ)
 Chạy lại: chỉ làm phần còn thiếu. --lai-giong: thu lại hết giọng.
 
-python xay-app.py --nguon "J:/_Apps/ai-video-producer/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80"
+python xay-app.py --nguon "J:/_Apps/truyen-dem-khuya/du-an/2026-11-07-khac-truyen-tranh-dao-duc-80"
 """
 import argparse, asyncio, glob, json, os, re, sys
 from pathlib import Path
@@ -99,13 +99,14 @@ async def thu_het(viec, cu, lai, song_song, tg_file, so_lan=4):
                 try:
                     cu[key] = khop(chu, await asyncio.wait_for(thu(chu, nn, duong), 60))  # 60s: tránh treo khi máy chủ im
                     xong[0] += 1
+                    if nn == 'vn': await asyncio.sleep(3)   # giữ nhịp để không bị chặn
                     if xong[0] % 25 == 0:
                         print("  da thu", xong[0], flush=True)
                         tg_file.write_text(json.dumps(cu), encoding="utf-8")
                     return
                 except Exception as e:
                     print("  loi", key, repr(e)[:120], flush=True)
-                    await asyncio.sleep(2 + lan * 3)
+                    await asyncio.sleep(30 if nn == 'vn' else 2 + lan * 3)
 
     await asyncio.gather(*(mot(*v) for v in viec))
     return xong[0]
@@ -144,8 +145,10 @@ def main():
             for i, f in enumerate(anh):
                 khung, chac = dk.khung(f)
                 mau += (not chac)
-                trang.append({"anh": lam_anh(f, so, i == 0), "khung": khung, "chac": chac})
-            dong = [{"id": "ten", "vn": f"{s['ten_vn']}. {s['phu_de_vn']}.", "en": f"{s['ten_en']}. {s['phu_de_en']}.", "trang": 0, "khung": -1}]
+                with Image.open(f) as _im:
+                    tl = round(_im.height / _im.width, 4)
+                trang.append({"anh": lam_anh(f, so, i == 0), "khung": khung, "chac": chac, "tl": tl})
+            dong = [{"id": "ten", "vn": f"{s['ten_vn']}. {s['phu_de_vn']}".strip().rstrip(".") + ".", "en": f"{s['ten_en']}. {s['phu_de_en']}".strip().rstrip(".") + ".", "trang": 0, "khung": -1}]
             for k, p in enumerate(s["panels"]):
                 dong.append({"id": f"k{k + 1}", "vn": p["vn"], "en": p["en"], "trang": k // 4, "khung": k % 4})
             dong.append({"id": "bh", "vn": "Bài học: " + s["bai_hoc_vn"], "en": "Moral: " + s["bai_hoc_en"], "trang": len(anh) - 1, "khung": -2})
